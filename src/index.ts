@@ -110,3 +110,41 @@ console.log(divisivelPor11(1,100))
 
 
 //Fim do seu código
+
+/**
+ * Exercício 01 - cria um novo vetor com os valores do vetor original mais dois novos valores
+ * Nome da função - criaNovoVetor
+ * Crie uma função que retorne um novo vetor com os valores do vetor original mais dois novos valores
+ * @param {number[]} vetor Vetor de números
+ * @param {number} valor1 Primeiro valor a ser adicionado
+ * @param {number} valor2 Segundo valor a ser adicionado
+ * @returns {number[]} Retorna um novo vetor com os valores do vetor original mais dois novos valores
+ * @example
+ * criaNovoVetor([1, 2, 3], 4, 5) // [1, 2, 3, 4, 5]
+ * criaNovoVetor([1, 2, 3], 0, 0) // [1, 2, 3, 0, 0]
+ */ 
+
+//Início do seu código
+
+
+
+//Fim do seu código
+
+function minhaPromessa():Promise<string>{
+    const prom:Promise<string> = new Promise ((resolve,reject)=>{
+        setTimeout(()=>reject("Breno"),5000)
+    })
+    return prom
+}
+minhaPromessa()
+.then((valor)=>console.log(valor))
+.catch((erro)=>console.log(erro))
+console.log("Executei esse código")
+
+try{
+const resultado = await minhaPromessa()
+console.log(resultado)
+}
+catch(erro){
+    console.log(erro)
+}

@@ -97,16 +97,16 @@
 
 //Início do seu código
 
-function divisivelPor11(min:number, max:number){
-    const vetorDivisiveis11:number[] = []
-    for (let i = min; i <= max; i++){
-        if (i%11===0){
-                vetorDivisiveis11.push(i)
-        }
-    }
-    return vetorDivisiveis11
-}
-console.log(divisivelPor11(1,100))
+// function divisivelPor11(min:number, max:number){
+//     const vetorDivisiveis11:number[] = []
+//     for (let i = min; i <= max; i++){
+//         if (i%11===0){
+//                 vetorDivisiveis11.push(i)
+//         }
+//     }
+//     return vetorDivisiveis11
+// }
+// console.log(divisivelPor11(1,100))
 
 
 //Fim do seu código
@@ -130,21 +130,37 @@ console.log(divisivelPor11(1,100))
 
 //Fim do seu código
 
-function minhaPromessa():Promise<string>{
-    const prom:Promise<string> = new Promise ((resolve,reject)=>{
-        setTimeout(()=>reject("Breno"),5000)
-    })
-    return prom
-}
-minhaPromessa()
-.then((valor)=>console.log(valor))
-.catch((erro)=>console.log(erro))
-console.log("Executei esse código")
+// function devolveTere():Promise<string>{
+//     const prom:Promise<string> = new Promise ((resolve,reject)=>{
+//         setTimeout(()=>resolve("tere"),5000)
+//     })
+//     const numero = Math.random()
+//     const nul:Promise<string> = new Promise ((resolve,reject)=>{
+//         setTimeout(()=>resolve("nulo"),5000)
+//     })
+//     if(Math.random()>0.5){
+//         return nul
+//     }else{
+//     return prom
+//     }
+// }
+// console.log(devolveTere())
 
-try{
-const resultado = await minhaPromessa()
-console.log(resultado)
+// try{
+// const resultado = await devolveTere()
+//  console.log(resultado)
+// } catch(erro){
+//     console.log(erro)
+// }
+
+const vetor:number[] = [1,2,3,4]
+
+function verificar(valor:number){
+    if(valor===2){
+        return true
+    }else{
+        return false
+    }
 }
-catch(erro){
-    console.log(erro)
-}
+console.log(vetor.find(verificar))
+

@@ -1,46 +1,54 @@
 // Get the client
-import mysql, { type RowDataPacket } from 'mysql2/promise';
+import mysql, { type RowDataPacket, type Connection, type ResultSetHeader } from 'mysql2/promise';
 
-
-import express from 'express'
-import type { Connection } from 'mysql2';
+import express from 'express';
 const app = express()
-//Como criar uma rota no express?
-app.get("/pessoas", async (req,res)=>{let connection:Connection|null = null
-try {
-  const connection = await mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'luademel',
+app.use(express.json())
+
+//Como cria uma rota no express?
+interface IPessoa extends RowDataPacket {
+    id: number,
+    nome: string,
+}
+
+const connection = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    database: 'luademel',
 });
-//  const result =
-//    await connection
-//    .execute('INSERT INTO pessoa (id,nome) VALUES (?,?)',[3,"Maria"])
-//  console.log(result)
-  const [dados,campos] = await connection.execute<IPessoa[]>('SELECT * FROM pessoa')
-  console.log(dados[0]);
-  for(let i = 0; i < dados.length; i++){
-    const element = dados[i];
-    console.log(element?.id,element?.nome)
-  }
-  res.status(200).json(dados)
-} catch (err) {
-  //todo
-  console.log(err);
-  if(connection){
-    await (connection as Connection).end()
-  }
-}
-// Close the connection
 
+app.get("/pessoas", async (req, res) => {
+    try {
+        const [dados, campos] =
+            await connection.execute<IPessoa[]>('SELECT * FROM pessoa')
+        res.status(200).json(dados)
+    } catch (err) {
+        //TODO:
+        console.log(err);
+    }
 })
-app.post("/pessoas",(req,res)=>{})
-app.listen(8000,()=>{
-  console.log("iniciando o servidor na porta 8000")
+app.post("/pessoas", async (req, res) => {
+    //Pegar as informações do usuário   => REQ.body
+    //inserir
+
+    const { id, nome } = req.body
+    try {
+        const [result] =
+            await connection
+                .execute<ResultSetHeader>('INSERT INTO pessoa VALUES (?,?)', [id, nome])
+        //Retornar algo que indique que deu certo
+        if (result.affectedRows == 0) 
+          return res.status(500).json({ mensagem: "Erro ao inserir!" })
+        
+        return res.status(201).json({ mensagem: "Sucesso ao inserir!" })
+        
+    }catch(err){
+      return res.status(500).json({ mensagem: "Erro ao inserir!" })
+    }
+    
+})
+app.listen(8000, () => {
+    console.log("Iniciando o servidor na porta 8000")
 })
 
-
-interface IPessoa extends RowDataPacket{
-    id:number,
-    nome:string,
-}
+//validem o id e nome para não serem vazios

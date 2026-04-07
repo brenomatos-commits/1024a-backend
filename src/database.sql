@@ -4,3 +4,15 @@ create table luademel.pessoa(
     nome varchar(50)
 );
 insert into luademel.pessoa values (1,"Tere");
+
+create table luademel.produto (
+    id int,
+    nome VARCHAR(300),
+    categoria VARCHAR(300),
+    preco DECIMAL(10,2),
+    data_criacao DATETIME,
+    data_modificacao DATETIME
+);
+
+
+
